@@ -24,7 +24,7 @@ float mc_cpu(float S0, float r, float sigma, float T, float k, int64_t N) {
 
 int main() {
 
-    int64_t N = pow(10, 12); // number of simulations
+    int64_t N = pow(10, 9); // number of simulations
 
     float S0 = 100.0;   // initial stock price
     float r  = 0.05;    // risk-free rate
