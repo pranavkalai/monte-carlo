@@ -7,11 +7,10 @@ float mc_cpu(float S0, float r, float sigma, float T, float k, int64_t N) {
     std::mt19937 gen(42);
     std::normal_distribution<double> dist(0.0, 1.0);
 
-    float Z;
     float payoff = 0;
 
     for (int64_t i = 0; i < N; i++) {
-        Z = dist(gen);
+        float Z = dist(gen);
         float ST = S0 * std::exp((r - 0.5 * sigma * sigma) * T + sigma * std::sqrt(T) * Z);
         payoff += std::max(ST - k, 0.0f);
     }
