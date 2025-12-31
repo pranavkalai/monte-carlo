@@ -1,4 +1,6 @@
+//%%writefile kernels.cu
 #include <curand_kernel.h>
+#include <stdio.h>
 
 __global__ void init_kernel(curandStatePhilox4_32_10_t* device_states_, unsigned long long seed) {
 
@@ -13,9 +15,6 @@ __global__ void monte_carlo_kernel(curandStatePhilox4_32_10_t* device_states_,
     float payoff = 0;
 
     int thrd_idx = blockIdx.x * blockDim.x + threadIdx.x; // thread index calculation
-
-    if (thrd_idx >= num_threads_) {return;} // out of bounds check
-
     int stride = blockDim.x * gridDim.x; // total number of threads
 
     curandStatePhilox4_32_10_t local_state = device_states_[thrd_idx]; // copy state to local memory
@@ -27,6 +26,10 @@ __global__ void monte_carlo_kernel(curandStatePhilox4_32_10_t* device_states_,
         float ST = S0 * exp((r - 0.5 * sigma * sigma) * T + sigma * sqrt(T) * normal_rand_var);
 
         payoff += fmax(ST - k, 0.0f); // partial sum of payoffs
+
+        if (thrd_idx < 4 && i < 10) { // debug statements
+            printf("tid=%d, i=%lld, payoff=%f\n", thrd_idx, i, payoff);
+        }
     }
 
     results[thrd_idx] = payoff; // store result

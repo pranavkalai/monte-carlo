@@ -1,10 +1,11 @@
+//%%writefile mc_gpu.cu
 #include <cuda_runtime.h>
-#include <kernels.h>
+#include "kernels.h"
 #include <iostream>
 
 int main() {
 
-    int64_t N = pow(10, 9); // number of simulations
+    int64_t N = pow(10, 3); // number of simulations
 
     float S0 = 100.0;   // initial stock price
     float r  = 0.05;    // risk-free rate
@@ -13,7 +14,7 @@ int main() {
     float k = 110.0;    // strike price
 
     int threads_per_block = 256;
-    int blocks_per_grid = 1024;
+    int blocks_per_grid = 1;
     int num_threads = threads_per_block * blocks_per_grid;
 
     curandStatePhilox4_32_10_t* d_states;
@@ -21,12 +22,22 @@ int main() {
 
     init_kernel<<<blocks_per_grid, threads_per_block>>>(d_states, 42);
 
+    cudaError_t cudaerr = cudaDeviceSynchronize();
+    if (cudaerr != cudaSuccess) {
+        printf("init_kernel launch failed with error \"%s\".\n",
+               cudaGetErrorString(cudaerr));
+    }
+
     float* results_d;
     cudaMalloc(&results_d, num_threads * sizeof(float));
 
     monte_carlo_kernel<<<blocks_per_grid, threads_per_block>>>(d_states, S0, r, sigma, T, k, N, results_d, num_threads);
 
-    cudaDeviceSynchronize(); // wait for gpu stuff to finish
+    cudaError_t cudaerr1 = cudaDeviceSynchronize();
+    if (cudaerr1 != cudaSuccess) {
+        printf("init_kernel launch failed with error \"%s\".\n",
+               cudaGetErrorString(cudaerr1));
+    }
 
     float* results_h = new float[num_threads];
     cudaMemcpy(results_h, results_d, num_threads * sizeof(float), cudaMemcpyDeviceToHost);
@@ -43,5 +54,3 @@ int main() {
     
     return 0;
 }
-
-
