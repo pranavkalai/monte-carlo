@@ -1,3 +1,4 @@
+// %%writefile kernels.h
 #include <curand_kernel.h>
 
 #pragma once

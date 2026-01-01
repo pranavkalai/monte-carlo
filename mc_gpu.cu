@@ -1,11 +1,11 @@
-//%%writefile mc_gpu.cu
+// %%writefile mc_gpu.cu
 #include <cuda_runtime.h>
-#include "kernels.h"
 #include <iostream>
+#include "kernels.h"
 
 int main() {
 
-    int64_t N = pow(10, 3); // number of simulations
+    int64_t N = 100000000; // number of simulations
 
     float S0 = 100.0;   // initial stock price
     float r  = 0.05;    // risk-free rate
@@ -51,6 +51,6 @@ int main() {
 
     std::cout << "Monte Carlo GPU Result: " << value << std::endl;
 
-    
+
     return 0;
 }

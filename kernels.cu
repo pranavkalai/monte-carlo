@@ -1,12 +1,14 @@
-//%%writefile kernels.cu
+// %%writefile kernels.cu
 #include <curand_kernel.h>
+#include <cuda_runtime.h>
 #include <stdio.h>
+#include "kernels.h"
 
 __global__ void init_kernel(curandStatePhilox4_32_10_t* device_states_, unsigned long long seed) {
 
     int idx = blockIdx.x * blockDim.x + threadIdx.x; // thread index calculation
     curand_init(seed, idx, 0, &device_states_[idx]); // initialize ecah thread's CURAND state
-    
+
 }
 
 __global__ void monte_carlo_kernel(curandStatePhilox4_32_10_t* device_states_,
