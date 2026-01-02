@@ -8,7 +8,7 @@ __global__ void init_kernel(curandStatePhilox4_32_10_t* device_states_, unsigned
 
     int idx = blockIdx.x * blockDim.x + threadIdx.x; // thread index calculation
     if (idx >= num_threads_) {return;}
-    curand_init(seed, idx, 0, &device_states_[idx]); // initialize ecah thread's CURAND state
+    curand_init(seed, idx, 0, &device_states_[idx]); // initialize each thread's CURAND state
 
 }
 
