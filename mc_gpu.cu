@@ -14,7 +14,7 @@ int main() {
     float T = 1.0;      // time
     float k = 110.0;    // strike price
 
-    int threads_per_block = 1024;
+    int threads_per_block = 256;
     int blocks_per_grid = 1;
     int num_threads = threads_per_block * blocks_per_grid;
 
