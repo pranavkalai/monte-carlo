@@ -23,13 +23,16 @@ __global__ void monte_carlo_kernel(curandStatePhilox4_32_10_t* device_states_,
 
     curandStatePhilox4_32_10_t local_state = device_states_[thrd_idx]; // copy state to local memory
 
+    const float constant_factor_1 = (r - 0.5f * sigma * sigma) * T;
+    const float constant_factor_2 = sigma * sqrtf(T);
+
     for (int64_t i = thrd_idx; i < N; i += stride) {
         float normal_rand_var = curand_normal(&local_state); // generate normal random variable
 
         // explore optimizing exp and sqrt calls
-        float ST = S0 * exp((r - 0.5 * sigma * sigma) * T + sigma * sqrt(T) * normal_rand_var);
+        float ST = S0 * expf(constant_factor_1 + constant_factor_2 * normal_rand_var);
 
-        payoff += fmax(ST - k, 0.0f); // partial sum of payoffs
+        payoff += fmaxf(ST - k, 0.0f); // partial sum of payoffs
 
         //if (thrd_idx < 4 && i < 10) { // debug statements
            // printf("tid=%d, i=%lld, payoff=%f\n", thrd_idx, i, payoff);
