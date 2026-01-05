@@ -22,9 +22,16 @@ double mc_cpu(double S0, double r, double sigma, double T, double k, int64_t N) 
 }
 
 
-int main() {
+int main(int argc, char* argv[]) {
 
-    int64_t N = 1000000000; // number of simulations
+    int64_t N = 1000; // number of simulations, can be changed by providing a cmd line argument
+    if (argc == 2) {
+        N = std::stoll(argv[1]);
+    }
+    if (argc > 2) {
+        std::cout << "Too many arguements provided" << std::endl;
+        return -1;
+    }
 
     double S0 = 100.0;   // initial stock price
     double r  = 0.05;    // risk-free rate
