@@ -34,7 +34,7 @@ The simulation uses several variables to define the European call option. These 
 
 ## How to Compile
 
-You can run each versions independently, but you can also run both at the same time to compare performance metrics with ``` main.cpp ```
+You can run each versions independently, but you can also run both at the same time to compare performance metrics with ``` main.cpp ```. The instructions below assume you are running the simulations in the **Google Colab environment** with a T4 GPU.
 
 ```bash
 # Compile CPU version (mc_cpu.cpp)
