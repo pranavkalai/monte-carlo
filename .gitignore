@@ -1,0 +1,6 @@
+# Ignore compiled executables
+*.exe
+*.out
+mc_cpu
+mc_gpu
+main
