@@ -17,7 +17,20 @@ Two versions were implememnted:
 - **Compiler:** g++ for CPU, nvcc for GPU
 - **Libraries:** cuRAND (for GPU random number generation)
 
-*Note: Google Colab comes pre-installed with the CUDA environment, but if running locally or in your own IDE, you need to install the CUDA Toolkit.*
+> Google Colab comes pre-installed with the CUDA environment, but if running locally or in your own IDE, you need to install the CUDA Toolkit.*
+
+## Option Parameters
+
+The simulation uses several variables to define the European call option. These can be modified in the source code to explore different scenarios:
+
+- **`S0` (Initial Stock Price):** The starting price of the underlying stock. Default is `100.0`.  
+- **`r` (Risk-Free Rate):** The annualized risk-free interest rate, used for discounting the option payoff. Default is `0.05` (5%).  
+- **`sigma` (Volatility):** The standard deviation of the stock’s returns, representing how much the stock price can fluctuate. Default is `0.2` (20%).  
+- **`T` (Time to Maturity):** The time until the option expires, in years. Default is `1.0`.  
+- **`k` (Strike Price):** The price at which the option can be exercised. Default is `110.0`.  
+
+> To test different market conditions or option scenarios, simply modify these values in the code before compiling and running the simulation.
+
 
 ## How to Compile
 
