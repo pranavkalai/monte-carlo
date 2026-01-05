@@ -17,17 +17,19 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+    std::cout << "Running CPU and GPU Monte Carlo Simulations with N = " << args_cpu[1] << std::endl;
+
     pid_t pid = fork();
 
     if (pid < 0) {
         std::cerr << "Fork failed" << std::endl;
-        return 1;
+        return -1;
     } 
     else if (pid == 0) {
         // Child process
         if (execvp(args_cpu[0], args_cpu) < 0) {
             std::cerr << "Error executing CPU program" << std::endl;
-            return 1;
+            return -1;
         }
     } 
     else {
@@ -36,7 +38,7 @@ int main(int argc, char* argv[]) {
         std::cout << std::endl;
         if (execvp(args_gpu[0], args_gpu) < 0) {
             std::cerr << "Error executing GPU program" << std::endl;
-            return 1;
+            return -1;
         }
     }
 
