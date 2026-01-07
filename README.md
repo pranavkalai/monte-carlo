@@ -49,7 +49,7 @@ g++ -std=c++17 main.cpp -o main
 
 ## How to Run
 
-By default, the simulation runs with 1,000 paths. You can provide a command-line argument to specify the number of simulations. Values up to 10<sup>8</sup> have been tested; beyond that, the GPU version should still work, but the CPU version may take a very long time. Bugs are still being fixed, so use moderate simulation counts to avoid long runtimes or unexpected behavior.
+By default, the simulation runs with 1,000 paths. You can provide a command-line argument to specify the number of simulations. Values up beyond 10<sup>8</sup> will take some time on the CPU version of the program, but the GPU version should complete in a reasonable amount of time. Use moderate simulation counts to avoid long runtimes or unexpected behavior.
 
 ```bash
 # Run CPU simulation
