@@ -18,6 +18,7 @@ int main(int argc, char* argv[]) {
     }
 
     std::cout << "Running CPU and GPU Monte Carlo Simulations with N = " << args_cpu[1] << std::endl;
+    std::cout << std::endl;
 
     pid_t pid = fork();
 
